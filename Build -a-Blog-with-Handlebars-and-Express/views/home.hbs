@@ -1,0 +1,27 @@
+<h2>All Posts</h2>
+<a href="/add" class="btn btn-success mb-3">Add New Post</a>
+{{#if posts.length}}
+  <ul class="list-group">
+    {{#each posts}}
+      <li class="list-group-item">
+        <a href="/post/{{this.id}}">{{this.title}}</a>
+        <small class="text-muted">{{this.timestamp}}</small>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No posts yet. Be the first to add one!</p>
+{{/if}}
+
+<h2>Add a New Post</h2>
+<form action="/add" method="POST">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" name="title" required>
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,10 @@
+blog-app/
+├── views/
+│   ├── layouts/
+│   │   └── main.hbs
+│   ├── home.hbs
+│   └── post.hbs
+├── public/
+│   └── styles.css (optional for custom CSS)
+├── app.js
+└── posts.json (to store blog posts)
