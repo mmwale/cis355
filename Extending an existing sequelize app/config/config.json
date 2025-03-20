@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "cis35590",
+    "database": "seqlapp",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "cis35590",
+    "database": "seqlapp",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "cis35590",
+    "database": "seqlapp",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
