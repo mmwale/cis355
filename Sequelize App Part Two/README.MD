@@ -1,3 +1,4 @@
+Node modules are installed on the development environment of the respective device, thus node_modules folder is not uploaded!
 STEPS TO COMPLETE THE TASK (TASK BY Instructor/Professor Michael Lapan)
 1. Download the ZIP and migrate/copy the files on the zip to the project workspace. Link is:  https://github.com/hurnhu/starter-code-tasks
 2. Navigate to your project directory on your development environment and, on the terminal, type "npm install"
