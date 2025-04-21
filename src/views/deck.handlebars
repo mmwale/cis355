@@ -1,0 +1,160 @@
+<div class="container">
+  <header class="app-header">
+    <h1 class="logo">FlashLearn</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/decks">My Decks</a>
+      {{#if user}}
+        <a href="/logout">Logout</a>
+      {{else}}
+        <a href="/login">Login</a>
+      {{/if}}
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+    </div>
+  </header>
+
+  <main class="deck-detail">
+    <div class="deck-header">
+      <h2>{{deck.title}}</h2>
+      <div class="deck-actions">
+        <a href="/decks/{{deck.id}}/edit" class="btn-edit">Edit Deck</a>
+        <form action="/decks/{{deck.id}}/delete" method="POST" class="inline-form">
+          <button type="submit" class="btn-delete">Delete Deck</button>
+        </form>
+        <a href="/decks/{{deck.id}}/study" class="btn-study">Study Now</a>
+        <a href="/decks/{{deck.id}}/flashcards/new" class="btn-add">+ Add Flashcard</a>
+      </div>
+    </div>
+
+    <div class="flashcards-list">
+      {{#each deck.Flashcards}}
+        <div class="flashcard-item">
+          <div class="flashcard-content">
+            <h3>{{this.question}}</h3>
+            <p class="answer-preview">{{truncate this.answer 50}}</p>
+          </div>
+          <div class="flashcard-actions">
+            <a href="/flashcards/{{this.id}}/edit" class="btn-edit">Edit</a>
+            <form action="/flashcards/{{this.id}}/delete" method="POST" class="inline-form">
+              <button type="submit" class="btn-delete">Delete</button>
+            </form>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>© 2023 FlashLearn. Study smarter.</p>
+  </footer>
+</div>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    color: #4a6fa5;
+    margin: 0;
+  }
+  
+  .search-bar input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+  }
+  
+  .deck-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .deck-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-edit, .btn-delete, .btn-study, .btn-add {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .btn-edit {
+    background-color: #4a6fa5;
+    color: white;
+  }
+  
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-study {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-add {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .flashcards-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .flashcard-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .flashcard-content h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .answer-preview {
+    color: #666;
+    font-style: italic;
+  }
+  
+  .flashcard-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .app-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: #666;
+  }
+</style>

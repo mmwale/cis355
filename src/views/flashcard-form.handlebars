@@ -1,0 +1,80 @@
+<div class="container">
+  <header class="app-header">
+    <!-- Same header as deck detail -->
+  </header>
+
+  <main class="flashcard-form">
+    <h2>{{#if flashcard}}Edit{{else}}Create{{/if}} Flashcard</h2>
+    
+    <form action="{{#if flashcard}}/flashcards/{{flashcard.id}}{{else}}/decks/{{deckId}}/flashcards{{/if}}" method="POST">
+      <div class="form-group">
+        <label for="question">Question</label>
+        <textarea id="question" name="question" required>{{flashcard.question}}</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="answer">Answer</label>
+        <textarea id="answer" name="answer" required>{{flashcard.answer}}</textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn-save">Save</button>
+        <a href="/decks/{{deckId}}" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <footer class="app-footer">
+    <!-- Same footer as deck detail -->
+  </footer>
+</div>
+
+<style>
+  .flashcard-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .form-group textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-save {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+</style>
