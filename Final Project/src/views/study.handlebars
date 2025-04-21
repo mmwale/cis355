@@ -1,0 +1,78 @@
+{{! views/study.handlebars }}
+<div class="study-container">
+  <header class="study-header">
+    <h1>FlashLearn</h1>
+    <a href="/decks/{{deck.id}}" class="exit-button">Exit Study Mode</a>
+  </header>
+
+  <div class="progress-indicator">
+    Card {{add currentCardIndex 1}} of {{totalCards}}
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-front">
+        <h2>{{deck.Flashcards.[currentCardIndex].question}}</h2>
+        <p>Click to reveal answer</p>
+      </div>
+      <div class="flashcard-back">
+        <p>{{deck.Flashcards.[currentCardIndex].answer}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-controls">
+    <button onclick="moveCard(-1)" {{#if (eq currentCardIndex 0)}}disabled{{/if}}>
+      Previous
+    </button>
+    <button onclick="moveCard(1)" {{#if (eq currentCardIndex (sub totalCards 1))}}disabled{{/if}}>
+      Next
+    </button>
+  </div>
+</div>
+
+<script>
+  let currentCardIndex = {{currentCardIndex}};
+  const totalCards = {{totalCards}};
+
+  function moveCard(offset) {
+    window.location.href = `/decks/{{deck.id}}/study?card=${currentCardIndex + offset}`;
+  }
+</script>
+
+<style>
+  .flashcard {
+    width: 400px;
+    height: 250px;
+    perspective: 1000px;
+    cursor: pointer;
+    margin: 20px auto;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .flashcard-front {
+    background-color: #f8f9fa;
+  }
+  .flashcard-back {
+    background-color: #e9ecef;
+    transform: rotateY(180deg);
+  }
+</style>

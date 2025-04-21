@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "daniel2468",
+    "database": "flashlearn",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "daniel2468",
+    "database": "flashlearn",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "daniel2468",
+    "database": "flashlearn",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
