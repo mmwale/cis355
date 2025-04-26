@@ -3,8 +3,9 @@ import { Request, Response } from 'express';
 import passport from 'passport';
 import { User } from '../models';
 
+// Check if the user is already authenticated
 export const showLogin = (req: Request, res: Response) => {
-  res.render('login', { error: req.flash('error') });
+  res.render('login', { title: 'Login', error: req.flash('error') });
 };
 
 export const login = passport.authenticate('local', {
@@ -13,11 +14,11 @@ export const login = passport.authenticate('local', {
   failureFlash: true
 });
 
-export const showRegister = (req: Request, res: Response) => {
+export const showRegister = (req: Request, res: Response) => {// Show the registration form
   res.render('register', { error: req.flash('error') });
 };
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {// Register a new user
   try {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,7 +37,7 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const logout = (req: Request, res: Response) => {
+export const logout = (req: Request, res: Response) => {// Logout the user
   req.logout(() => {
     res.redirect('/');
   });

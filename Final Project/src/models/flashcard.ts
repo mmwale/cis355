@@ -1,53 +1,45 @@
-import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import Deck from './deck';
-import { sequelize } from './index';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
-class Flashcard extends Model<InferAttributes<Flashcard>, InferCreationAttributes<Flashcard>> {
-  declare id: CreationOptional<number>;
-  declare question: string;
-  declare answer: string;
-  declare deckId: ForeignKey<Deck['id']>;
 
-  // Timestamps
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+class Flashcard extends Model {// Define the Flashcard model
+  static initModel(sequelize: Sequelize) {// Initialize the Flashcard model
+    Flashcard.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        question: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        answer: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        deckId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'decks',
+            key: 'id',
+          },
+        },
+        createdAt: DataTypes.DATE,
+        updatedAt: DataTypes.DATE,
+      },
+      {
+        sequelize,
+        modelName: 'Flashcard',
+        tableName: 'flashcards',
+      }
+    );
+  }
 
-  static associate(models: any) {
+  static associate(models: any) {// Define associations here
     this.belongsTo(models.Deck, { foreignKey: 'deckId' });
   }
 }
-
-Flashcard.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    question: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    answer: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    deckId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'decks',
-        key: 'id'
-      }
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
-  },
-  {
-    sequelize,
-    modelName: 'Flashcard',
-    tableName: 'flashcards'
-  }
-);
 
 export default Flashcard;

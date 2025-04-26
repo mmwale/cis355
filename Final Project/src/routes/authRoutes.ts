@@ -7,8 +7,9 @@ import {
     showRegister
 } from '../controllers/authController';
   
-const router = express.Router();
+const router = express.Router();// Create a new router instance
 
+// Define routes for authentication
 router.get('/login', showLogin);
 router.post('/login', login);
 router.get('/register', showRegister);

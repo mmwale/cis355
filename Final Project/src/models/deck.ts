@@ -1,49 +1,47 @@
-import { CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { sequelize } from './index';
-import User from './user';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
-class Deck extends Model<InferAttributes<Deck>, InferCreationAttributes<Deck>> {
-  declare id: CreationOptional<number>;
-  declare title: string;
-  declare userId: ForeignKey<User['id']>;
+class Deck extends Model {// Define the Deck model
+  public id!: number;
+  public title!: string;
+  public userId!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+  
+  static initModel(sequelize: Sequelize) {// Initialize the Deck model
+    Deck.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        title: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        userId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'users',
+            key: 'id',
+          },
+        },
+        createdAt: DataTypes.DATE,
+        updatedAt: DataTypes.DATE,
+      },
+      {
+        sequelize,
+        modelName: 'Deck',
+        tableName: 'decks',
+      }
+    );
+  }
 
-  // Timestamps
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
-
-  static associate(models: any) {
-    this.belongsTo(models.User, { foreignKey: 'userId' });
+  static associate(models: any) {// Define associations here
+    this.belongsTo(models.User, { foreignKey: 'userId', as: 'User' });
     this.hasMany(models.Flashcard, { foreignKey: 'deckId' });
   }
 }
-
-Deck.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
-  },
-  {
-    sequelize,
-    modelName: 'Deck',
-    tableName: 'decks'
-  }
-);
 
 export default Deck;

@@ -1,5 +1,5 @@
-// src/routes/deckRoutes.ts
 import express, { RequestHandler } from 'express';
+// Importing express and RequestHandler from express
 import {
   createDeck,
   deleteDeck,
@@ -8,7 +8,11 @@ import {
 } from '../controllers/deckController';
 import { Deck, Flashcard } from '../models';
 
-const router = express.Router();
+const router = express.Router();// Create a new router instance
+
+router.get('/new', (req, res) => {// Render the form for creating a new deck
+  res.render('deck-form', { title: 'Create New Deck' });
+});
 
 router.get('/:id', getDeck as RequestHandler);
 router.post('/', createDeck as RequestHandler);
@@ -21,7 +25,7 @@ interface DeckWithFlashcards extends Deck {
   Flashcards?: Flashcard[];
 }
 
-router.get<{ id: string }, {}, {}, { card?: string }>('/:id/study', async (req, res, next) => {
+router.get<{ id: string }, {}, {}, { card?: string }>('/:id/study', async (req, res, next) => {// Route to study a deck
   try {
     const deck = await Deck.findByPk(req.params.id, {
       include: [{

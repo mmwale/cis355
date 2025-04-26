@@ -6,8 +6,9 @@ import {
     updateFlashcard
 } from '../controllers/flashcardController';
 
-const router = express.Router();
+const router = express.Router();// Create a new router instance
 
+// Define routes for flashcards
 router.get('/:deckId/flashcards/new', getFlashcardForm);
 router.get('/:deckId/flashcards/:id/edit', getFlashcardForm);
 router.post('/:deckId/flashcards', createFlashcard);

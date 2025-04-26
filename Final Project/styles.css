@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c5c6c7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #116466;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  header, footer {
+    background-color: #ede0d4;
+    padding: 20px;
+  }
+  
+  header .logo {
+    font-size: 24px;
+    color: #116466;
+  }
+  
+  nav a {
+    margin-right: 15px;
+    color: #116466;
+  }
+  
+  nav a:hover {
+    color: #c5c6c7;
+    background-color: #116466;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  .create-deck {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #116466;
+    color: #ede0d4;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .create-deck:hover {
+    background-color: #c5c6c7;
+    color: #116466;
+  }
+  
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .deck-card {
+    background-color: #ede0d4;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .deck-card h3 {
+    color: #116466;
+  }
+  
+  .deck-card a {
+    color: #116466;
+    font-weight: bold;
+  }

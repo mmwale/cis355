@@ -1,36 +1,61 @@
-import { DataTypes, Model } from 'sequelize';
-import { Deck, sequelize } from './index';
+import { Association, DataTypes, HasManyGetAssociationsMixin, Model, Sequelize } from 'sequelize';
+import Deck from './deck';
 
-class User extends Model {
-  declare id: number;
-  declare username: string;
-  declare email: string;
-  declare password: string;
-  
-  // Add these for consistency
-  declare createdAt: Date;
-  declare updatedAt: Date;
-  
-  static associate(models: { Deck: typeof Deck }) {
-    this.hasMany(models.Deck, { foreignKey: 'userId' });
+class User extends Model {// Define the User model
+  public id!: number;
+  public email!: string;
+  public password!: string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  // Add the Decks association
+  declare Decks?: Deck[];
+  declare getDecks: HasManyGetAssociationsMixin<Deck>;
+
+  public static associations: {// Define associations
+    Decks: Association<User, Deck>;
+  };
+
+  static initModel(sequelize: Sequelize) {// Initialize the User model
+    User.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
+        username: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        email: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        createdAt: DataTypes.DATE,
+        updatedAt: DataTypes.DATE,
+      },
+      {
+        sequelize,
+        modelName: 'User',
+        tableName: 'users',
+      }
+    );
+  }
+
+  static associate(models: any) {// Define associations here
+    this.hasMany(models.Deck, { 
+      foreignKey: 'userId', 
+      as: 'Decks',
+      onDelete: 'CASCADE' // Add cascading delete
+    });
   }
 }
-
-User.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
-  username: DataTypes.STRING,
-  email: DataTypes.STRING,
-  password: DataTypes.STRING,
-  createdAt: DataTypes.DATE,
-  updatedAt: DataTypes.DATE
-}, { 
-  sequelize, 
-  modelName: 'user',
-  tableName: 'users'
-});
 
 export default User;

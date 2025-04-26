@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { Flashcard } from '../models';
+import { Deck, Flashcard } from '../models';
 
+// Function to render the form for creating or updating a flashcard
 export const getFlashcardForm = async (req: Request, res: Response) => {
   try {
     if (req.params.id) {
@@ -17,21 +18,31 @@ export const getFlashcardForm = async (req: Request, res: Response) => {
   }
 };
 
+// Function to create a new flashcard
 export const createFlashcard = async (req: Request, res: Response) => {
   try {
     const { question, answer } = req.body;
+    const deck = await Deck.findOne({
+      where: { id: req.params.deckId, userId: req.user!.id },
+    });
+
+    if (!deck) {
+      return res.status(404).send('Deck not found');
+    }
+
     await Flashcard.create({
       question,
       answer,
-      deckId: parseInt(req.params.deckId)
+      deckId: deck.id,
     });
-    res.redirect(`/decks/${req.params.deckId}`);
+    res.redirect(`/decks/${deck.id}`);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error creating flashcard');
   }
 };
 
+// Function to render the form for updating a flashcard
 export const updateFlashcard = async (req: Request, res: Response) => {
   try {
     const { question, answer } = req.body;
@@ -45,6 +56,7 @@ export const updateFlashcard = async (req: Request, res: Response) => {
   }
 };
 
+// Function to delete a flashcard
 export const deleteFlashcard = async (req: Request, res: Response) => {
   try {
     await Flashcard.destroy({
